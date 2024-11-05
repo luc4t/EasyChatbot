@@ -9,7 +9,7 @@ function getPageNumberArrayAsString(pages) {
 class ChatManager {
     #submitBtn = null;
     #clearBtn = null;
-    #chatTextBox = null;
+    #chatTextBox = null; 
     #chatBubblesContainer = null;
     #chatMessages = [];
     #restorePromptOnFailure = true;
@@ -30,10 +30,13 @@ class ChatManager {
         this.#clearBtn.addEventListener("click", this.clearChat.bind(this));
 
         this.setRestorePromptOnFailure(restorePromptOnFailure);
+
+        this.#chatTextBox.placeholder = "Wonach möchten Sie suchen?";
+        this.#submitBtn.textContent = "SUCHEN";
     }
 
     #onChatTextBoxKeyDown(event) {
-        // Check if the key is Enter and not Shift+Enter (to allow multiline messages)
+        // check if the key is enter and not shift+enter (to allow multiline messages)
         if(event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
             this.#submitBtn.click();
@@ -67,7 +70,7 @@ class ChatManager {
     }
 
     #removeUiWaitingChatMessage(messageElement) {
-        // Remove the waiting messages
+        // remove the waiting messages
         while(
             this.#chatBubblesContainer.lastChild !== null &&
             this.#chatBubblesContainer.lastChild.classList.contains("waiting")
@@ -82,8 +85,6 @@ class ChatManager {
         messageElement.classList.add("waiting");
         messageElement.innerHTML = '<div class="dot-pulse"></div>';
         this.#chatBubblesContainer.appendChild(messageElement);
-        // Scroll to the bottom
-        this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
         return;
     }
 
@@ -102,12 +103,11 @@ class ChatManager {
         for (var i = 0; i < addtionalClasses.length; i++) {
             messageElement.classList.add(addtionalClasses[i]);
         }
-        // Check if the message is Markdown
+        
         if (role === "assistant") {
-            // Adding markdown
             var zmd = document.createElement("zero-md");
             zmd.addEventListener('zero-md-rendered', function() {
-                // Configure markdown links
+                console.log("configuring markdown links");
                 var nodes = zmd.shadowRoot.querySelectorAll('a[href]');
                 nodes.forEach(function(node) {
                     var href = new URL(node.href);
@@ -119,10 +119,10 @@ class ChatManager {
                             node.title = citation.title;
                             if(citation.pages.length > 0) {
                                 if(citation.pages.length == 1) {
-                                    node.title += " (Seite " + getPageNumberArrayAsString(citation.pages) + ")";
+                                    node.title += " (page " + getPageNumberArrayAsString(citation.pages) + ")";
                                 }
                                 else {
-                                    node.title += " (Seiten " + getPageNumberArrayAsString(citation.pages) + ")";
+                                    node.title += " (pages " + getPageNumberArrayAsString(citation.pages) + ")";
                                 }
                             }
                             if(citation.url.endsWith(".pdf")) {
@@ -135,24 +135,23 @@ class ChatManager {
                         }
                     }
                     else if(href.host !== currentUrl.host) {
-                        // External link
+                        // external link
                         node.target = "_blank";
                         return;
                     }
                 });
             });
             zmd.innerHTML ='<template data-append><style> .markdown-body { background-color:transparent; } </style></template>';
-            var md = document.createElement("script");
+            var md = document.createElement("script"); 
             md.type = "text/markdown";
-            md.innerHTML = message + "\n";
+            md.innerHTML = message;
             zmd.appendChild(md);
             messageElement.appendChild(zmd);
         } else {
-            // For user and error messages, just display text
             messageElement.innerText = message;
         }
+
         this.#chatBubblesContainer.appendChild(messageElement);
-        // Scroll to the bottom
         this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
         return;
     }
@@ -196,7 +195,7 @@ class ChatManager {
         if(message === "") {
             return;
         }
-        // From here on, we have a valid message
+        // from here on, we have a valid message
         this.#addUiUserChatMessage(message);
         this.#chatTextBox.value = "";
 
@@ -214,7 +213,7 @@ class ChatManager {
                 console.log("Received unexpected status", response.status);
             }
             var data = await response.json();
-            // Check if the response is valid
+            // check if the response is valid
             if(data === undefined || data === null || "error" in data) {
                 console.log("JSON Data", data);
                 throw new Error("Received invalid response");
@@ -236,10 +235,10 @@ class ChatManager {
         }
         catch(e) {
             if(this.#restorePromptOnFailure) {
-                this.#popLastChatMessage()
+                this.#popLastChatMessage();
                 this.#chatTextBox.value = message;
             }
-            this.#addUiErrorChatMessage("Fehler beim Senden der Nachricht");
+            this.#addUiErrorChatMessage("Error while sending message");
             console.error("Error while sending message", e);
             return;
         }
@@ -257,9 +256,15 @@ class ChatManager {
         for(var i = 0; i < choice.message.context.citations.length; i++) {
             msg += "[doc" + (i + 1) + "]: " + "https://easy-chat-bot/citation/" + i + "\n";
         }
-
-        this.#addUiChatMessage(msg, "assistant", false);
+        
+        this.#addUiChatMessage(msg, "assistant", true);
     }
 }
 
 window.chatbot = new ChatManager();
+
+const modeToggle = document.getElementById('modeToggle');
+modeToggle.addEventListener('click', () => {
+  document.body.classList.toggle('dark-mode');
+  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});

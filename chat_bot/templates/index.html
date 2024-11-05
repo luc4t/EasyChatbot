@@ -18,11 +18,13 @@ Pflege- & Hygienerichtlinien KSGR
     <div class="chatBubblesContainer" id="chatBubblesContainer"></div>
     <div class="chatUiInputs">
         <textarea class="chatTextbox" id="chatTextBox" placeholder="Wonach möchten Sie suchen?"></textarea>
-        <div class="chatClear button danger clearButton" id="chatClearBtn">X</div>
-        <div class="chatSubmit button sendButton" id="chatSubmitBtn">SUCHEN</div>   
+        <button class="chatSubmit" id="chatSubmitBtn">SUCHEN</button>
+        <button class="chatClear" id="chatClearBtn">X</button>    
     </div>
 </div>
+
 {% endblock %}
+
 {% block bottomloadscript %}
 <script src="{{ url_for('static', filename='assets/js/chat.js') }}"></script>
 <modal-dialog id="PdfViewer">

@@ -3,235 +3,294 @@
 @import url('dots.css');
 
 /**
-Color Palette:
-- Primary: #C60219
-- Hover: #A50D07
-- Assistant Message Border: #2A9D8F
-- User Message Background: #e0e5ec
-- User Message Border: #C60219
-- Clear Button Background: #E76F51
-- Clear Button Hover: #c44b2d
+https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
 */
 
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
 }
 
-/* Root Container */
-.easyChatBotRoot {
+* {
+    font-family: 'Segoe UI';
+}
+
+
+div.loginErrorBox {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #440e00;
+    border-radius: 5px;
+    background-color: #E76F51;
+    margin-bottom: 20px;
+    color:#440e00;
+}
+
+
+div.formGroup {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+div.formGroup label {
+    width: 100px;
+    text-align: right;
+}
+
+div.loginBox {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+
+}
+div.loginBox h2 {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+
+div.easyChatBotMenuBar {
+    margin-bottom: 12px;
+}
+div.easyChatBotMenuBar h1 {
+    text-align: center;
+    
+    color: #000000;
+    font-family: 'Segoe UI Variable Static Small';
+    font-weight: 700;
+    font-size: 1.4em;
+    margin: 0;
+    padding: 0.5em;
+    background-color: #f6f8fa;
+    /*background-image: linear-gradient(90deg, #264653, #2A9D8F, #E9C46A, #F4A261, #E76F51);
+    background-size: 100%;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;*/
+}
+div.easyChatBotMenuBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #264653;
+}
+div.easyChatBotMenuBar li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+div.easyChatBotMenuBar li:last-child {
+    border-right: none;
+}
+div.easyChatBotMenuBar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+div.easyChatBotMenuBar li a:hover {
+    background-color: #4a869e;
+}
+div.easyChatBotMenuBar li a.active {
+    background-color: #2A9D8F;
+}
+div.easyChatBotMenuBar li a.active:hover {
+    background-color: #34c2b1;
+}
+
+div.spacer {
+    margin-bottom: 20px;
+}
+
+
+
+div.easyChatBotRoot {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     height: 100vh;
 }
 
-/* Navigation Bar */
-.easyChatBotMenuBar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 10px;
-    background-color: #f6f8fa;
-    margin-bottom: 12px;
+div.easyChatBotRoot div.easyChatBotMenuBar {
+    flex-grow: 0;
 }
-
-.easyChatBotMenuBar h1 {
-    margin: 0;
-    font-size: 1.4em;
-    font-family: 'Segoe UI Variable Static Small';
-    font-weight: 700;
-}
-
-.easyChatBotMenuBar .logout-button {
-    color: #000;
-    text-decoration: none;
-    font-size: 1em;
-}
-
-.easyChatBotMenuBar .logout-button:hover {
-    text-decoration: underline;
-}
-
-/* Content Area */
-.easyChatBotContent {
+div.easyChatBotRoot div.easyChatBotContent {
     flex-grow: 2;
     display: flex;
     flex-direction: column;
 }
 
-/* Chat Interface */
-.chatBotArea {
+div.easyChatBotRoot div.easyChatBotContent > h1 {
+    margin: 0px 10px 10px 10px;
+}
+
+div.easyChatBotRoot div.chatBotArea {
     flex-grow: 2;
     display: flex;
     flex-direction: column;
+    padding: 5px;
 }
 
-.chatBubblesContainer {
+div.easyChatBotRoot div.chatBotArea div.chatBubblesContainer {
     flex-grow: 2;
     overflow-y: auto;
-    padding: 10px;
+    padding: 10px 40px;
 }
 
-.chatUiInputs {
+
+
+div.easyChatBotRoot div.chatBotArea div.chatUiInputs {
+    padding: 10px 40px;
+    flex-grow: 0;
     display: flex;
-    align-items: center;
-    padding: 5px;
     gap: 10px;
+    align-items:center;
+}
+div.easyChatBotRoot div.chatBotArea div.chatUiInputs textarea.chatTextbox {
+    flex-grow: 2;
 }
 
-.chatUiInputs textarea.chatTextbox {
-    flex-grow: 1;
-    resize: none;
+
+
+
+textarea.chatTextbox {
     min-height: 50px;
     padding: 10px;
-    border-radius: 15px;
+    border-radius: 5px;
     border: 1px solid #ccc;
+    resize: none;
 }
 
-.chatUiInputs .button {
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 15px;
-    border-radius: 15px;
-    cursor: pointer;
+.button {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #2A9D8F;
+    color: white;
     border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+.button:hover {
+    background-color: #34c2b1;
 }
 
-.chatUiInputs .clearButton {
-    width: 50px;
-    min-width: 50px;
-    padding: 0;
-    border-radius: 50%;
+.button.current {
+    background-color: #264653;
+}
+.button.current:hover {
+    background-color: #4a869e;
+}
+
+.button.danger {
     background-color: #E76F51;
-    color: #fff;
 }
 
-.chatUiInputs .clearButton:hover {
+.button.danger:hover {
     background-color: #c44b2d;
 }
 
-.chatUiInputs .sendButton {
-    background-color: #C60219;
-    color: white;
-}
 
-.chatUiInputs .sendButton:hover {
-    background-color: #A50D07;
-}
 
-/* Chat Messages */
+
 .chatMessage {
     background-color: #e0e5ec;
     color: black;
     font-weight: bold;
-    font-size: 1em;
-    line-height: 1.5;
-    border-radius: 15px;
-    padding: 10px 15px;
-    margin-top: 20px;
+    box-shadow: 
+      -8px -8px 20px rgba(255, 254, 183, 0.12), 
+      -6px -6px 6px rgba(255, 254, 183, 0.12),
+      8px 8px 20px #0001, 
+      5px 5px 6px #0001, 
+      inset 0px 0px 0px rgba(255, 254, 183, 0.12),
+      inset 0px 0px 0px #0001, 
+      inset 0px 0px 0px rgba(255, 254, 183, 0.12), 
+      inset 0px 0px 0px #0001;
+      font-size: 1.2em;
+    line-height: 2;
+    border-radius: 10px;
+    padding: 2px 20px;
+    margin-top: 60px;
     position: relative;
     word-wrap: break-word;
     min-height: 40px;
-}
-
-.chatMessage.user {
-    background-color: #f0f0f0; /* Neutral light gray */
-    border-left: 10px solid #C60219; /* Match send button color */
-}
-
-.chatMessage.assistant {
-    background-color: #e0e5ec;
-    border-right: 10px solid #2A9D8F;
-}
-
-.chatMessage.error {
-    border-right: 10px solid red;
-    color: red;
-}
-
-.chatMessage zero-md {
+  }
+  
+  .chatMessage.user {
+    --dot-color: deeppink;
+    border-left: 10px solid deeppink;
+  }
+  
+  .chatMessage.user::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    border-width: 30px 0 0 30px;
+    border-style: solid;
+    border-color: #e0e5ec transparent;
+    width: 2px;
+    border-radius: 0 0 40px 0;
+  }
+  
+  .chatMessage zero-md {
     padding-top: 5px;
     padding-bottom: 5px;
-}
+  }
 
-/* Loading Animation Dots */
-.chatMessage.assistant.waiting > div {
+  .chatMessage.assistant {
+    --dot-color: limegreen;
+    border-right: 10px solid limegreen;
+  }
+  
+  .chatMessage.assistant::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    border-width: 30px 0 0 30px;
+    border-style: solid;
+    border-color: #e0e5ec transparent;
+    width: 2px;
+    border-radius: 0 0 40px 0;
+  }
+
+  .chatMessage.assistant.waiting > div {
     margin-top: 15px;
     margin-left: 15px;
-}
+  }
 
-/* Login Page Styles */
-.loginBox {
-    width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    border-radius: 15px;
-    background-color: #f6f8fa;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-.loginBox h2 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    text-align: center;
-}
+  .chatMessage.error {
+    --dot-color: red;
+    border-right: 10px solid red;
+    color: red;
+  }
+  
+  .chatMessage.error::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -30px;
+    right: 20px;
+    border-width: 30px 30px 0 0;
+    border-style: solid;
+    border-color: #e0e5ec transparent;
+    width: 2px;
+    border-radius: 0 0 0 40px;
+  }
 
-.loginErrorBox {
-    width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #E76F51;
-    color: #fff;
-    margin-bottom: 20px;
-    text-align: center;
-}
 
-.formGroup {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
-}
 
-.formGroup label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.formGroup input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    font-size: 1em;
-}
-
-.button.loginButton {
-    width: 100%;
-    padding: 15px;
-    font-size: 1em;
-    border-radius: 15px;
-    background-color: #C60219;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.button.loginButton:hover {
-    background-color: #A50D07;
-}
-
-@media (max-width: 480px) {
-    .loginBox {
-        width: 90%;
-        margin: 20px auto;
-    }
-}
-
-/* Modal Dialog Styles */
 modal-dialog {
     z-index: 1000;
     position: fixed;
@@ -250,6 +309,7 @@ modal-dialog {
 modal-dialog.show {
     display: flex;
 }
+
 
 modal-dialog div.modal-content {
     flex-grow: 1;
@@ -291,7 +351,77 @@ modal-dialog div.modal-content div.modal-body div.loading {
     margin: 20px 0px 30px 20px;
 }
 
-modal-dialog div.modal-content div.modal-body hr {
+modal-dialog div.modal-content div.modal-body hr  {
     border: 0px none transparent;
     border-top: 1px solid black;
+}
+
+.chatSubmit, .chatClear {
+  height: 50px;
+  border-radius: 25px;
+  padding: 0 20px;
+}
+
+.chatSubmit {
+  background-color: #C60219;
+}
+
+.chatSubmit:hover {
+  background-color: #A50D07;  
+}
+
+.chatClear {
+  background-color: #ccc;
+  color: #333;
+  min-width: 50px;
+}
+
+.chatClear:hover {
+  background-color: #999;
+}
+
+.chatMessage.user {
+  background-color: #f0f0f0;
+}
+
+.chatMessage.assistant {
+  background-color: #e0e0e0;  
+}
+
+.logout-btn {
+  background-color: #C60219;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+.logout-btn:hover {
+  background-color: #A50D07;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #fff;
+  }
+  
+  .chatMessage.user {
+    background-color: #333333;
+  }
+
+  .chatMessage.assistant { 
+    background-color: #444444;
+  }
+}
+
+body.dark-mode {
+  background-color: #121212;
+  color: #fff;
+}
+
+body.dark-mode .chatMessage.user {
+  background-color: #333333;
+}
+
+body.dark-mode .chatMessage.assistant {
+  background-color: #444444;
 }
