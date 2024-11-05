@@ -16,7 +16,7 @@ class ChatManager {
     constructor(
         submitBtn = null,
         clearBtn = null,
-        chatTextBox = null, 
+        chatTextBox = null,
         chatBubblesContainer = null,
         restorePromptOnFailure = true
     ) {
@@ -33,6 +33,14 @@ class ChatManager {
 
         this.#chatTextBox.placeholder = "Wonach möchten Sie suchen?";
         this.#submitBtn.textContent = "SUCHEN";
+        
+        this.#chatTextBox.addEventListener('focus', () => {
+            this.#chatTextBox.style.borderColor = '#A50D07';
+        });
+        
+        this.#chatTextBox.addEventListener('blur', () => {
+            this.#chatTextBox.style.borderColor = '#C60219';
+        });
     }
 
     #onChatTextBoxKeyDown(event) {
@@ -131,7 +139,7 @@ class ChatManager {
                                     console.log("PDF Citation", citation);
                                     window.pdfRenderer.renderPDF(citation);
                                 });
-                                node.style.color = "#C60219"; // Set citation color to #C60219
+                                node.style.color = "#C60219";
                             }
                         }
                     }
@@ -288,7 +296,7 @@ class ChatManager {
                                 console.log("PDF Citation", citation);
                                 window.pdfRenderer.renderPDF(citation);
                             });
-                            node.style.color = "#C60219"; // Set citation color to #C60219
+                            node.style.color = "#C60219";
                         }
                     }
                 }
@@ -316,5 +324,5 @@ window.chatbot = new ChatManager();
 const modeToggle = document.getElementById('modeToggle');
 modeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
-  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☾';
+  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☽';
 });
