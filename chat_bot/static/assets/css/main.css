@@ -268,20 +268,6 @@ textarea.chatTextbox:focus {
     color: red;
 }
 
-.chatMessage.error::after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: -30px;
-    right: 20px;
-    border-width: 30px 30px 0 0;
-    border-style: solid;
-    border-color: #e0e5ec transparent;
-    width: 2px;
-    border-radius: 0 0 0 40px;
-}
-
-
 
 modal-dialog {
     z-index: 1000;
