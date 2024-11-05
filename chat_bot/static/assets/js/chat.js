@@ -329,7 +329,7 @@ window.addEventListener('load', () => {
     modeToggle.textContent = '☀';
   } else {
     document.body.classList.remove('dark-mode');
-    modeToggle.textContent = '🌙';
+    modeToggle.textContent = '☽';
   }
   modeToggle.style.color = '#808080';
   modeToggle.style.fontSize = '1.5em';
@@ -338,7 +338,7 @@ window.addEventListener('load', () => {
 const modeToggle = document.getElementById('modeToggle');
 modeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
-  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀' : '🌙';
+  modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☽';
   modeToggle.style.color = '#808080';
   modeToggle.style.fontSize = '1.5em';
 });

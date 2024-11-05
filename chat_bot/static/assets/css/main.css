@@ -1,6 +1,5 @@
 @import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
 @import url('https://fonts.cdnfonts.com/css/segoe-ui-variable-static-display');
-@import url('dots.css');
 
 /**
 https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
@@ -46,12 +45,8 @@ div.loginBox {
     padding: 20px;
     border: none;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #fff;
 
-}
-div.loginBox h2 {
-    margin-top: 0px;
-    margin-bottom: 20px;
 }
 
 div.loginBox input[type="text"],
@@ -78,9 +73,9 @@ div.loginBox input[type="password"]:focus {
 
 div.loginBox .loginSubmit {
     border-radius: 20px;
-    padding: 15px 30px;
+    padding: 12px 24px;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.2em;
     border: none;
     background-color: #C60219;
     color: #fff;
@@ -183,7 +178,7 @@ div.easyChatBotRoot div.chatBotArea div.chatUiInputs textarea.chatTextbox {
 
 
 textarea.chatTextbox {
-    min-height: 50px;
+    min-height: 40px;
     padding: 10px 15px;
     border-radius: 20px;
     border: 2px solid #C60219;
@@ -264,7 +259,7 @@ textarea.chatTextbox:focus {
 }
 
 .chatMessage.assistant.waiting {
-    color: #A6A6A6;
+    color: #000;
 }
 
 .chatMessage.error {
@@ -355,9 +350,9 @@ modal-dialog div.modal-content div.modal-body hr  {
 
 .chatSubmit, .chatClear {
     border-radius: 20px;
-    padding: 15px 30px;
+    padding: 12px 24px;
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.2em;
     border: none;
 }
 
@@ -382,7 +377,7 @@ modal-dialog div.modal-content div.modal-body hr  {
 .login-btn, .logout-btn {
     background-color: #C60219;
     border-radius: 20px;
-    padding: 8px 16px;
+    padding: 6px 12px;
     color: #fff;
 }
 
@@ -435,6 +430,10 @@ modal-dialog div.modal-content div.modal-body hr  {
     div.loginBox input[type="password"]::placeholder {
         color: #A6A6A6;
     }
+
+    .chatMessage.assistant.waiting {
+        color: #000;
+    }
 }
 
 body.dark-mode div.easyChatBotMenuBar {
@@ -479,6 +478,10 @@ body.dark-mode div.loginBox input[type="password"] {
 
 body.dark-mode div.loginBox input[type="text"]::placeholder,
 body.dark-mode div.loginBox input[type="password"]::placeholder {
+    color: #A6A6A6;
+}
+
+body.dark-mode .chatMessage.assistant.waiting {
     color: #A6A6A6;
 }
 
