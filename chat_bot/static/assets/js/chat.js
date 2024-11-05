@@ -91,7 +91,7 @@ class ChatManager {
         messageElement.classList.add("chatMessage");
         messageElement.classList.add("assistant");
         messageElement.classList.add("waiting");
-        messageElement.textContent = "Antwort wird generiert...";
+        messageElement.innerHTML = '<div class="dot-pulse"></div>';
         this.#chatBubblesContainer.appendChild(messageElement);
         return;
     }
@@ -111,10 +111,6 @@ class ChatManager {
         for (var i = 0; i < addtionalClasses.length; i++) {
             messageElement.classList.add(addtionalClasses[i]);
         }
-        
-        // Adjust the width based on message length
-        messageElement.style.width = 'fit-content';
-        messageElement.style.maxWidth = '80%';
         
         if (role === "assistant") {
             var zmd = document.createElement("zero-md");
@@ -265,7 +261,10 @@ class ChatManager {
             "content": choice.message.content
         });
 
-        var msg = choice.message.content;
+        var msg = choice.message.content + "\n\n";
+        for(var i = 0; i < choice.message.context.citations.length; i++) {
+            msg += "[doc" + (i + 1) + "]: " + "https://easy-chat-bot/citation/" + i + "\n";
+        }
         
         var messageElement = document.createElement("div");
         messageElement.classList.add("chatMessage");
@@ -322,23 +321,8 @@ class ChatManager {
 
 window.chatbot = new ChatManager();
 
-// Check the browser's preferred color scheme on page load
-window.addEventListener('load', () => {
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.body.classList.add('dark-mode');
-    modeToggle.textContent = '☀';
-  } else {
-    document.body.classList.remove('dark-mode');
-    modeToggle.textContent = '☽';
-  }
-  modeToggle.style.color = '#808080';
-  modeToggle.style.fontSize = '1.5em';
-});
-
 const modeToggle = document.getElementById('modeToggle');
 modeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
   modeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀' : '☽';
-  modeToggle.style.color = '#808080';
-  modeToggle.style.fontSize = '1.5em';
 });
