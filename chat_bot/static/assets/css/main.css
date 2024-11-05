@@ -1,204 +1,203 @@
-@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
-@import url('https://fonts.cdnfonts.com/css/segoe-ui-variable-static-display');
-@import url('dots.css');
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-/**
-https://coolors.co/palette/264653-2a9d8f-e9c46a-f4a261-e76f51
-*/
+/* Variables for color scheme */
 :root {
-    --color-primary: #264653;
-    --color-secondary: #2A9D8F;
-    --color-accent-1: #E9C46A;
-    --color-accent-2: #F4A261;
-    --color-accent-3: #E76F51;
+    --primary-color: #0d47a1;
+    --secondary-color: #1976d2;
+    --accent-color: #42a5f5;
+    --background-color: #f5f5f5;
+    --text-color: #212121;
+    --text-light-color: #fafafa;
+    --error-color: #d32f2f;
 }
 
 body {
     margin: 0;
     padding: 0;
+    background-color: var(--background-color);
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
 }
 
-* {
-    font-family: 'Segoe UI';
+a {
+    text-decoration: none;
+    color: var(--primary-color);
 }
 
-div.loginErrorBox {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #440e00;
-    border-radius: 5px;
-    background-color: var(--color-accent-3);
-    margin-bottom: 20px;
-    color: #440e00;
+.easyChatBotMenuBar {
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
 }
 
-div.formGroup {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-div.formGroup label {
-    width: 100px;
-    text-align: right;
-}
-
-div.loginBox {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-div.loginBox h2 {
-    margin-top: 0px;
-    margin-bottom: 20px;
-}
-
-div.easyChatBotMenuBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: var(--color-primary);
-    color: white;
-}
-
-div.easyChatBotMenuBar .logo {
+.easyChatBotMenuBar h1 {
+    margin: 0;
+    padding: 1em;
     font-size: 1.5em;
-    font-weight: bold;
 }
 
-div.easyChatBotMenuBar ul {
-    display: flex;
+.easyChatBotMenuBar ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-}
-
-div.easyChatBotMenuBar li {
-    margin-left: 20px;
-}
-
-div.easyChatBotMenuBar li.right {
-    margin-left: auto;
-}
-
-div.easyChatBotMenuBar li a {
-    color: white;
-    text-decoration: none;
-}
-
-div.easyChatBotMenuBar li a:hover {
-    text-decoration: underline;
-}
-
-.chatbot-container {
+    overflow: hidden;
+    background-color: var(--primary-color);
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f6f8fa;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    justify-content: flex-start;
 }
 
-.chatbot-header {
-    padding: 20px;
-    background-color: var(--color-primary);
-    color: white;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.chatbot-body {
+.easyChatBotMenuBar li {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
 }
 
-.chat-messages {
+.easyChatBotMenuBar li a {
+    display: block;
+    color: var(--text-light-color);
+    text-align: center;
+    padding: 14px 16px;
+}
+
+.easyChatBotMenuBar li a:hover,
+.easyChatBotMenuBar li a.active {
+    background-color: var(--secondary-color);
+}
+
+.chatBotArea {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 150px);
+}
+
+.chatBubblesContainer {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--background-color);
 }
 
-.chat-input {
+.chatUiInputs {
     display: flex;
-    gap: 10px;
+    padding: 10px;
+    background-color: var(--background-color);
 }
 
-.chat-textbox {
+.chatTextbox {
     flex: 1;
     padding: 10px;
-    border-radius: 5px;
     border: 1px solid #ccc;
+    border-radius: 25px;
+    resize: none;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--text-light-color);
 }
 
-.chatbot-footer {
-    padding: 10px 20px;
-    background-color: #f0f2f5;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.chatMessage {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    max-width: 80%;
-    word-wrap: break-word;
-}
-
-.chatMessage.user {
-    align-self: flex-end;
-    background-color: var(--color-accent-2);
-    color: white;
-}
-
-.chatMessage.assistant {
-    align-self: flex-start;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.chatTextbox:focus {
+    outline: none;
+    border-color: var(--accent-color);
 }
 
 .button {
-    padding: 10px;
-    border-radius: 5px;
-    background-color: var(--color-secondary);
-    color: white;
+    padding: 10px 20px;
+    margin-left: 10px;
     border: none;
+    border-radius: 25px;
+    background-color: var(--accent-color);
+    color: var(--text-light-color);
     cursor: pointer;
-    text-decoration: none;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 .button:hover {
-    background-color: var(--color-accent-2);
-}
-
-.button.current {
-    background-color: var(--color-primary);
-}
-
-.button.current:hover {
-    background-color: var(--color-secondary);
+    background-color: var(--secondary-color);
 }
 
 .button.danger {
-    background-color: var(--color-accent-3);
+    background-color: var(--error-color);
 }
 
 .button.danger:hover {
-    background-color: #c44b2d;
+    background-color: #b71c1c;
 }
 
+.chatMessage {
+    max-width: 60%;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 15px;
+    position: relative;
+    word-wrap: break-word;
+    font-size: 1em;
+}
+
+.chatMessage.user {
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+.chatMessage.assistant {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+.chatMessage.error {
+    background-color: var(--error-color);
+    color: var(--text-light-color);
+    align-self: center;
+    border-radius: 15px;
+}
+
+/* Tail pointers */
+.chatMessage::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+}
+
+.chatMessage.user::after {
+    right: -10px;
+    border-left: 10px solid var(--primary-color);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.chatMessage.assistant::after {
+    left: -10px;
+    border-right: 10px solid #e0e0e0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
+.chatMessage.error::after {
+    display: none;
+}
+
+/* Scrollbar styling */
+.chatBubblesContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chatBubblesContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.chatBubblesContainer::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.chatBubblesContainer::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Modal Window */
 modal-dialog {
     z-index: 1000;
     position: fixed;
@@ -207,8 +206,8 @@ modal-dialog {
     top: 10px;
     right: 10px;
     bottom: 10px;
-    border: solid 2px var(--color-primary);
-    background-color: rgba(255, 255, 255, 0.9);
+    border: solid 2px var(--primary-color);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 10px;
     margin: 0px;
     padding: 0px;
@@ -218,47 +217,176 @@ modal-dialog.show {
     display: flex;
 }
 
-modal-dialog div.modal-content {
-    flex-grow: 1;
+modal-dialog .modal-content {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    margin: 0px;
-    padding: 0px;
 }
 
-modal-dialog div.modal-content div.modal-header {
-    margin: 0px;
-    background-color: var(--color-primary);
-    color: white;
+modal-dialog .modal-header {
+    background-color: var(--primary-color);
+    color: var(--text-light-color);
     padding: 10px;
-    border: solid 2px var(--color-primary);
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-modal-dialog div.modal-content div.modal-header h2 {
-    margin: 0px;
+modal-dialog .modal-header h2 {
+    margin: 0;
 }
 
-modal-dialog div.modal-content div.modal-header div.close {
-    float: right;
+modal-dialog .modal-header .close {
+    font-size: 24px;
     cursor: pointer;
-    font-size: 30px;
-    margin-top: -10px;
 }
 
-modal-dialog div.modal-content div.modal-body {
-    flex-grow: 1;
-    padding: 10px;
+modal-dialog .modal-body {
+    flex: 1;
     overflow-y: auto;
+    padding: 20px;
+    background-color: var(--background-color);
 }
 
-modal-dialog div.modal-content div.modal-body div.loading {
-    --dot-color: var(--color-primary);
-    margin: 20px 0px 30px 20px;
+.loading {
+    margin: 20px 0;
+    text-align: center;
+    --dot-color: var(--primary-color);
 }
 
-modal-dialog div.modal-content div.modal-body hr {
-    border: 0px none transparent;
-    border-top: 1px solid black;
+.zero-md ::-webkit-scrollbar {
+    width: 8px;
+}
+
+.zero-md ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.zero-md ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.zero-md ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive design */
+@media screen and (max-width: 600px) {
+    .chatMessage {
+        max-width: 80%;
+    }
+
+    .easyChatBotMenuBar h1 {
+        font-size: 1.2em;
+    }
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #90caf9;
+        --secondary-color: #64b5f6;
+        --accent-color: #42a5f5;
+        --background-color: #121212;
+        --text-color: #e0e0e0;
+        --text-light-color: #ffffff;
+        --error-color: #ef5350;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+
+    a {
+        color: var(--primary-color);
+    }
+
+    .easyChatBotMenuBar {
+        background-color: var(--primary-color);
+        color: var(--text-light-color);
+    }
+
+    .easyChatBotMenuBar li a {
+        color: var(--text-light-color);
+    }
+
+    .easyChatBotMenuBar li a:hover,
+    .easyChatBotMenuBar li a.active {
+        background-color: var(--secondary-color);
+    }
+
+    .chatBubblesContainer {
+        background-color: var(--background-color);
+    }
+
+    .chatUiInputs {
+        background-color: var(--background-color);
+    }
+
+    .chatTextbox {
+        background-color: #1e1e1e;
+        color: var(--text-color);
+        border: 1px solid #555;
+    }
+
+    .chatTextbox:focus {
+        border-color: var(--accent-color);
+    }
+
+    .chatMessage.user {
+        background-color: var(--primary-color);
+        color: var(--text-light-color);
+    }
+
+    .chatMessage.assistant {
+        background-color: #1e1e1e;
+        color: var(--text-color);
+    }
+
+    .chatMessage.user::after {
+        border-left-color: var(--primary-color);
+    }
+
+    .chatMessage.assistant::after {
+        border-right-color: #1e1e1e;
+    }
+
+    .chatBubblesContainer::-webkit-scrollbar-track {
+        background: #2e2e2e;
+    }
+
+    .chatBubblesContainer::-webkit-scrollbar-thumb {
+        background: #555;
+    }
+
+    .chatBubblesContainer::-webkit-scrollbar-thumb:hover {
+        background: #888;
+    }
+
+    .button {
+        background-color: var(--accent-color);
+        color: var(--text-light-color);
+    }
+
+    .button:hover {
+        background-color: var(--secondary-color);
+    }
+
+    .button.danger {
+        background-color: var(--error-color);
+    }
+
+    .button.danger:hover {
+        background-color: #b71c1c;
+    }
+
+    modal-dialog {
+        background-color: rgba(18, 18, 18, 0.95);
+    }
+
+    modal-dialog .modal-body {
+        background-color: var(--background-color);
+    }
 }

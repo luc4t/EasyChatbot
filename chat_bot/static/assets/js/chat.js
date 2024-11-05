@@ -30,6 +30,11 @@ class ChatManager {
         this.#clearBtn.addEventListener("click", this.clearChat.bind(this));
 
         this.setRestorePromptOnFailure(restorePromptOnFailure);
+
+        // Auto-scroll to the bottom on new messages
+        this.#chatBubblesContainer.addEventListener('DOMNodeInserted', (event) => {
+            this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
+        });
     }
 
     #onChatTextBoxKeyDown(event) {
@@ -66,7 +71,7 @@ class ChatManager {
         return this;
     }
 
-    #removeUiWaitingChatMessage(messageElement) {
+    #removeUiWaitingChatMessage() {
         // remove the waiting messages
         while(
             this.#chatBubblesContainer.lastChild !== null &&
@@ -100,7 +105,12 @@ class ChatManager {
         for (var i = 0; i < addtionalClasses.length; i++) {
             messageElement.classList.add(addtionalClasses[i]);
         }
-        messageElement.innerText = message;
+
+        // Adding markdown support
+        var zmd = document.createElement("zero-md");
+        zmd.innerHTML = `<script type="text/markdown">${message}</script>`;
+        messageElement.appendChild(zmd);
+
         this.#chatBubblesContainer.appendChild(messageElement);
         return;
     }
@@ -206,53 +216,13 @@ class ChatManager {
             msg += "[doc" + (i + 1) + "]: " + "https://easy-chat-bot/citation/" + i + "\n";
         }
 
-        
         var messageElement = document.createElement("div");
         messageElement.classList.add("chatMessage");
         messageElement.classList.add("assistant");
-        // adding markdown
+
+        // Adding markdown support
         var zmd = document.createElement("zero-md");
-        zmd.addEventListener('zero-md-rendered', function() {
-            console.log("configuring markdown links");
-            var nodes = zmd.shadowRoot.querySelectorAll('a[href]');
-            nodes.forEach(function(node) {
-                var href = new URL(node.href);
-                if (href.host === "easy-chat-bot") {
-                    if(href.pathname.startsWith("/citation/")) {
-                        const citationIndex = parseInt(href.pathname.substring(10));
-                        const citation = choice.message.context.citations[citationIndex];
-                        node.href="#";
-                        node.title = citation.title;
-                        //node.title = citation.storageaccount_blob;
-                        if(citation.pages.length > 0) {
-                            if(citation.pages.length == 1) {
-                                node.title += " (page " + getPageNumberArrayAsString(citation.pages) + ")";
-                            }
-                            else {
-                                node.title += " (pages " + getPageNumberArrayAsString(citation.pages) + ")";
-                            }
-                        }
-                        if(citation.url.endsWith(".pdf")) {
-                            node.addEventListener("click", function(event) {
-                                event.preventDefault();
-                                console.log("PDF Citation", citation);
-                                window.pdfRenderer.renderPDF(citation);
-                            });
-                        }
-                    }
-                }
-                else if(href.host !== currentUrl.host) {
-                    // external link
-                    node.target = "_blank";
-                    return;
-                }
-            });
-        });
-        zmd.innerHTML ='<template data-append><style> .markdown-body { background-color:transparent; } </style></template>';
-        var md = document.createElement("script");
-        md.type = "text/markdown";
-        md.innerHTML = msg + "\n";
-        zmd.appendChild(md);
+        zmd.innerHTML = `<script type="text/markdown">${msg}</script>`;
         messageElement.appendChild(zmd);
 
         this.#chatBubblesContainer.appendChild(messageElement);
@@ -260,5 +230,3 @@ class ChatManager {
 }
 
 window.chatbot = new ChatManager();
-
-
