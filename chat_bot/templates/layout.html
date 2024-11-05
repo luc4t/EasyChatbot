@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Easy Chat Bot{% endblock %}</title>
-    <!-- Link to CSS files -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}">
-    <link rel="icon" href="favicon.ico">
-    {% block headloadscript %}
-    {% endblock %}
-</head>
-<body>
-    <div class="container">
-        {% block content %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>{% block title %}Pflege- & Hygienerichtlinien KSGR{% endblock %}</title>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+        <noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+        {% block headloadscript %}
         {% endblock %}
-    </div>
-    {% block bottomloadscript %}
-    {% endblock %}
-</body>
+    </head>
+    <body class="is-preload">
+        <div class="easyChatBotRoot">
+            <div class="easyChatBotMenuBar">
+                <h1>Pflege- &amp; Hygienerichtlinien KSGR</h1>
+                <a class="logout-button" href="{{ url_for('logout') }}">Logout ({{ user.username }})</a>
+            </div>
+            
+            <div class="easyChatBotContent">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+        {% block bottomloadscript %}
+        {% endblock %}
+    </body>
 </html>

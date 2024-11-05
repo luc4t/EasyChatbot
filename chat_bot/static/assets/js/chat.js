@@ -1,79 +1,265 @@
+function getPageNumberArrayAsString(pages) {
+    var a = [];
+    for(var i = 0; i < pages.length; i++) {
+        a.push(parseInt(pages[i]) + 1);
+    }
+    return a.join(", ");
+}
+
 class ChatManager {
-    constructor() {
-        this.submitBtn = document.getElementById("chatSubmitBtn");
-        this.chatTextBox = document.getElementById("chatTextBox");
-        this.chatBubblesContainer = document.getElementById("chatBubblesContainer");
-        this.chatMessages = [];
+    #submitBtn = null;
+    #clearBtn = null;
+    #chatTextBox = null;
+    #chatBubblesContainer = null;
+    #chatMessages = [];
+    #restorePromptOnFailure = true;
+    constructor(
+        submitBtn = null,
+        clearBtn = null,
+        chatTextBox = null,
+        chatBubblesContainer = null,
+        restorePromptOnFailure = true
+    ) {
+        this.#submitBtn = this.#getHtmlElement(submitBtn, "chatSubmitBtn");
+        this.#clearBtn = this.#getHtmlElement(clearBtn, "chatClearBtn");
+        this.#chatTextBox = this.#getHtmlElement(chatTextBox, "chatTextBox");
+        this.#chatBubblesContainer = this.#getHtmlElement(chatBubblesContainer, "chatBubblesContainer");
 
-        this.chatTextBox.addEventListener("keydown", (event) => {
-            if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault();
-                this.submitMessage();
-            }
-        });
+        this.#chatTextBox.addEventListener("keydown", this.#onChatTextBoxKeyDown.bind(this));
+        this.#submitBtn.addEventListener("click", this.submitMessage.bind(this));
+        this.#clearBtn.addEventListener("click", this.clearChat.bind(this));
 
-        this.submitBtn.addEventListener("click", () => {
-            this.submitMessage();
-        });
+        this.setRestorePromptOnFailure(restorePromptOnFailure);
     }
 
-    addMessageToUI(message, role) {
-        const messageElement = document.createElement("div");
-        messageElement.classList.add("chat-message", role);
-        messageElement.textContent = message;
-        this.chatBubblesContainer.appendChild(messageElement);
-        this.chatBubblesContainer.scrollTop = this.chatBubblesContainer.scrollHeight;
+    #onChatTextBoxKeyDown(event) {
+        // Check if the key is Enter and not Shift+Enter (to allow multiline messages)
+        if(event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            this.#submitBtn.click();
+        }
+    }
+
+    #getHtmlElement(element, defaultValue = "") {
+        if(element === undefined || element === null || element === "") {
+            element = String(defaultValue);
+        }
+        if(typeof element === "string") {
+            if(element.trim() != "") {
+                element = document.getElementById(element);
+            }
+            else {
+                element = null;
+            }
+        }
+        if(!(element instanceof HTMLElement)) {
+            throw new Error("element must be an HTMLElement or string with the id of the element");
+        }
+        return element;
+    }
+
+    getRestorePromptOnFailure() {
+        return this.#restorePromptOnFailure;
+    }
+    setRestorePromptOnFailure(value) {
+        this.#restorePromptOnFailure = Boolean(value);
+        return this;
+    }
+
+    #removeUiWaitingChatMessage(messageElement) {
+        // Remove the waiting messages
+        while(
+            this.#chatBubblesContainer.lastChild !== null &&
+            this.#chatBubblesContainer.lastChild.classList.contains("waiting")
+        ) {
+            this.#chatBubblesContainer.removeChild(this.#chatBubblesContainer.lastChild);
+        }
+    }
+    #addUiWaitingChatMessage() {
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("chatMessage");
+        messageElement.classList.add("assistant");
+        messageElement.classList.add("waiting");
+        messageElement.innerHTML = '<div class="dot-pulse"></div>';
+        this.#chatBubblesContainer.appendChild(messageElement);
+        // Scroll to the bottom
+        this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
+        return;
+    }
+
+    #addUiChatMessage(message, role, pushToHistory, addtionalClasses = []) {
+        if(pushToHistory && role !== "error") {
+            this.#chatMessages.push({
+                "role": role,
+                "content": message
+            });
+        }
+        this.#removeUiWaitingChatMessage();
+
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("chatMessage");
+        messageElement.classList.add(role);
+        for (var i = 0; i < addtionalClasses.length; i++) {
+            messageElement.classList.add(addtionalClasses[i]);
+        }
+        // Check if the message is Markdown
+        if (role === "assistant") {
+            // Adding markdown
+            var zmd = document.createElement("zero-md");
+            zmd.addEventListener('zero-md-rendered', function() {
+                // Configure markdown links
+                var nodes = zmd.shadowRoot.querySelectorAll('a[href]');
+                nodes.forEach(function(node) {
+                    var href = new URL(node.href);
+                    if (href.host === "easy-chat-bot") {
+                        if(href.pathname.startsWith("/citation/")) {
+                            const citationIndex = parseInt(href.pathname.substring(10));
+                            const citation = choice.message.context.citations[citationIndex];
+                            node.href="#";
+                            node.title = citation.title;
+                            if(citation.pages.length > 0) {
+                                if(citation.pages.length == 1) {
+                                    node.title += " (Seite " + getPageNumberArrayAsString(citation.pages) + ")";
+                                }
+                                else {
+                                    node.title += " (Seiten " + getPageNumberArrayAsString(citation.pages) + ")";
+                                }
+                            }
+                            if(citation.url.endsWith(".pdf")) {
+                                node.addEventListener("click", function(event) {
+                                    event.preventDefault();
+                                    console.log("PDF Citation", citation);
+                                    window.pdfRenderer.renderPDF(citation);
+                                });
+                            }
+                        }
+                    }
+                    else if(href.host !== currentUrl.host) {
+                        // External link
+                        node.target = "_blank";
+                        return;
+                    }
+                });
+            });
+            zmd.innerHTML ='<template data-append><style> .markdown-body { background-color:transparent; } </style></template>';
+            var md = document.createElement("script");
+            md.type = "text/markdown";
+            md.innerHTML = message + "\n";
+            zmd.appendChild(md);
+            messageElement.appendChild(zmd);
+        } else {
+            // For user and error messages, just display text
+            messageElement.innerText = message;
+        }
+        this.#chatBubblesContainer.appendChild(messageElement);
+        // Scroll to the bottom
+        this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
+        return;
+    }
+
+    #addUiUserChatMessage(message) {
+        this.#addUiChatMessage(message, "user", true);
+        this.#addUiWaitingChatMessage();
+        return;
+    }
+    
+    #addUiErrorChatMessage(message) {
+        this.#addUiChatMessage(message, "error", false);
+        return;
+    }
+
+    #popLastChatMessage() {
+        this.#removeUiWaitingChatMessage();
+        this.#chatMessages.pop();
+        this.#chatBubblesContainer.removeChild(this.#chatBubblesContainer.lastChild);
+        return;
+    }
+
+    async clearChat() {
+        this.#chatMessages = [];
+        this.#chatBubblesContainer.innerHTML = "";
+        try {
+            window.pdfRenderer.clearCache();
+        }
+        catch(e) {
+            console.error("Error while clearing cache", e);
+        }
+        return;
     }
 
     async submitMessage() {
-        const message = this.chatTextBox.value.trim();
-        if (!message) return;
-
-        // Display user's message
-        this.addMessageToUI(message, "user");
-        this.chatTextBox.value = '';
-        this.chatTextBox.focus();
-
-        // Add loading indicator
-        const loadingMessage = document.createElement("div");
-        loadingMessage.classList.add("chat-message", "assistant");
-        loadingMessage.textContent = "Typing...";
-        this.chatBubblesContainer.appendChild(loadingMessage);
-        this.chatBubblesContainer.scrollTop = this.chatBubblesContainer.scrollHeight;
+        var message = this.#chatTextBox.value;
+        if(typeof message !== "string") {
+            return;
+        }
+        message = message.trim();
+        if(message === "") {
+            return;
+        }
+        // From here on, we have a valid message
+        this.#addUiUserChatMessage(message);
+        this.#chatTextBox.value = "";
 
         try {
-            const response = await fetch("/api/chat", {
+            var response = await fetch("/api/chat", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    messages: this.chatMessages.concat({ role: "user", content: message })
+                    "messages": this.#chatMessages
                 })
             });
-
-            if (response.ok) {
-                const data = await response.json();
-                const assistantMessage = data.choices[0].message.content;
-
-                // Update chat history
-                this.chatMessages.push({ role: "user", content: message });
-                this.chatMessages.push({ role: "assistant", content: assistantMessage });
-
-                // Remove loading indicator and display assistant's message
-                this.chatBubblesContainer.removeChild(loadingMessage);
-                this.addMessageToUI(assistantMessage, "assistant");
-            } else {
-                throw new Error("Network response was not ok");
+            if(response.status != 200) {
+                console.log("Received unexpected status", response.status);
             }
-        } catch (error) {
-            this.chatBubblesContainer.removeChild(loadingMessage);
-            this.addMessageToUI("Sorry, there was an error processing your request.", "assistant");
-            console.error("Error submitting message:", error);
+            var data = await response.json();
+            // Check if the response is valid
+            if(data === undefined || data === null || "error" in data) {
+                console.log("JSON Data", data);
+                throw new Error("Received invalid response");
+            }
+            if(!("choices" in data)) {
+                console.log("JSON Data", data);
+                throw new Error("Response does not contain choices");
+            }
+            if(data.choices.length > 1) {
+                console.log("JSON Data contains multiple choices", data);
+            }
+            const selectedChoice = 0;
+            try {
+                await this.#processChoice(data.choices[selectedChoice]);
+            }
+            catch(e) {
+                console.error("Error while processing choice", e);
+            }
         }
+        catch(e) {
+            if(this.#restorePromptOnFailure) {
+                this.#popLastChatMessage()
+                this.#chatTextBox.value = message;
+            }
+            this.#addUiErrorChatMessage("Fehler beim Senden der Nachricht");
+            console.error("Error while sending message", e);
+            return;
+        }
+        return;
+    }
+
+    async #processChoice(choice) {
+        this.#removeUiWaitingChatMessage();
+        this.#chatMessages.push({
+            "role": "assistant",
+            "content": choice.message.content
+        });
+
+        var msg = choice.message.content + "\n\n";
+        for(var i = 0; i < choice.message.context.citations.length; i++) {
+            msg += "[doc" + (i + 1) + "]: " + "https://easy-chat-bot/citation/" + i + "\n";
+        }
+
+        this.#addUiChatMessage(msg, "assistant", false);
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    new ChatManager();
-});
+window.chatbot = new ChatManager();

@@ -1,22 +1,38 @@
 {% extends "layout.html" %}
 {% block title %}
-Easy Chat Bot
+Pflege- & Hygienerichtlinien KSGR
 {% endblock %}
 {% block headloadscript %}
-    <!-- Include any additional scripts here -->
-    <script src="{{ url_for('static', filename='assets/js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/modal.js') }}"></script>
+    <!-- Import zero-md element definition and auto-register -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
+    <!-- Import pdf.js -->
+    <script type="module">
+        import pdfjsDist from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.7.76/+esm';
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.7.76/build/pdf.worker.mjs';
+    </script>
+    <script type="module" src="{{ url_for('static', filename='assets/js/pdfrenderer.js') }}"></script>
 {% endblock %}
 {% block content %}
-<div class="chat-container">
-    <div class="chat-header">
-        <h1>Chat</h1>
-    </div>
-    <div class="chat-messages" id="chatBubblesContainer">
-        <!-- Chat messages will appear here -->
+<div class="chatBotArea">
+    <div class="chatBubblesContainer" id="chatBubblesContainer"></div>
+    <div class="chatUiInputs">
+        <textarea class="chatTextbox" id="chatTextBox" placeholder="Wonach möchten Sie suchen?"></textarea>
+        <div class="chatClear button danger clearButton" id="chatClearBtn">X</div>
+        <div class="chatSubmit button sendButton" id="chatSubmitBtn">SUCHEN</div>   
     </div>
 </div>
-<div class="chat-input">
-    <textarea id="chatTextBox" placeholder="Type a message..." autofocus></textarea>
-    <button id="chatSubmitBtn" class="send-button">Send</button>
-</div>
+{% endblock %}
+{% block bottomloadscript %}
+<script src="{{ url_for('static', filename='assets/js/chat.js') }}"></script>
+<modal-dialog id="PdfViewer">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="close">&times;</div>
+            <h2>PDF Viewer</h2>
+        </div>
+        <div class="modal-body">
+        </div>
+    </div>
+</modal-dialog>
 {% endblock %}
