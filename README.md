@@ -37,7 +37,7 @@ For local installation, you have to install the following components:
     # create a resource group
     New-AzResourceGroup -Name "easychatbot" -Location northeurope
     # deploy the chatbot - you require owner role on the resource group
-    .\iac\deployChatbot.ps1 -ResourceGroupName "easychatbot" -Location "northeurope"
+    .\iac\deployChatbot.ps1 -ResourceGroupName "easychatbot" -Location "switzerlandnorth"
     ```
 1. Login to the chatbot interface and chat with your pdf data
 
