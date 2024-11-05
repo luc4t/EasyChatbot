@@ -16,7 +16,7 @@ class ChatManager {
     constructor(
         submitBtn = null,
         clearBtn = null,
-        chatTextBox = null,
+        chatTextBox = null, 
         chatBubblesContainer = null,
         restorePromptOnFailure = true
     ) {
@@ -257,7 +257,55 @@ class ChatManager {
             msg += "[doc" + (i + 1) + "]: " + "https://easy-chat-bot/citation/" + i + "\n";
         }
         
-        this.#addUiChatMessage(msg, "assistant", true);
+        var messageElement = document.createElement("div");
+        messageElement.classList.add("chatMessage");
+        messageElement.classList.add("assistant");
+        // adding markdown
+        var zmd = document.createElement("zero-md");
+        zmd.addEventListener('zero-md-rendered', function() {
+            console.log("configuring markdown links");
+            var nodes = zmd.shadowRoot.querySelectorAll('a[href]');
+            nodes.forEach(function(node) {
+                var href = new URL(node.href);
+                if (href.host === "easy-chat-bot") {
+                    if(href.pathname.startsWith("/citation/")) {
+                        const citationIndex = parseInt(href.pathname.substring(10));
+                        const citation = choice.message.context.citations[citationIndex];
+                        node.href="#";
+                        node.title = citation.title;
+                        if(citation.pages.length > 0) {
+                            if(citation.pages.length == 1) {
+                                node.title += " (page " + getPageNumberArrayAsString(citation.pages) + ")";
+                            }
+                            else {
+                                node.title += " (pages " + getPageNumberArrayAsString(citation.pages) + ")";
+                            }
+                        }
+                        if(citation.url.endsWith(".pdf")) {
+                            node.addEventListener("click", function(event) {
+                                event.preventDefault();
+                                console.log("PDF Citation", citation);
+                                window.pdfRenderer.renderPDF(citation);
+                            });
+                        }
+                    }
+                }
+                else if(href.host !== currentUrl.host) {
+                    // external link
+                    node.target = "_blank";
+                    return;
+                }
+            });
+        });
+        zmd.innerHTML ='<template data-append><style> .markdown-body { background-color:transparent; } </style></template>';
+        var md = document.createElement("script"); 
+        md.type = "text/markdown";
+        md.innerHTML = msg;
+        zmd.appendChild(md);
+        messageElement.appendChild(zmd);
+
+        this.#chatBubblesContainer.appendChild(messageElement);
+        this.#chatBubblesContainer.scrollTop = this.#chatBubblesContainer.scrollHeight;
     }
 }
 
