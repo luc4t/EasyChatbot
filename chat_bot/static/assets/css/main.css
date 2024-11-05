@@ -387,7 +387,7 @@ modal-dialog div.modal-content div.modal-body hr  {
 
 @media (prefers-color-scheme: dark) {
     div.easyChatBotMenuBar {
-        background-color: #282828;
+        background-color: #000;
     }
     
     div.easyChatBotMenuBar h1 {
@@ -395,11 +395,11 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     div.easyChatBotRoot div.easyChatBotContent {
-        background-color: #282828;
+        background-color: #000;
     }
     
     div.easyChatBotRoot div.chatBotArea div.chatBubblesContainer {
-        background-color: #282828;
+        background-color: #000;
     }
 
     .chatMessage.assistant {
@@ -407,7 +407,7 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     textarea.chatTextbox {
-        background-color: #282828;
+        background-color: #000;
         color: #fff;
     }
 
@@ -416,13 +416,13 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
     
     div.loginBox {
-        background-color: #282828;
+        background-color: #000;
         color: #fff;
     }
 
     div.loginBox input[type="text"],
     div.loginBox input[type="password"] {
-        background-color: #282828;
+        background-color: #000;
         color: #fff;
     }
 
@@ -432,12 +432,12 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     .chatMessage.assistant.waiting {
-        color: #282828;
+        color: #fff;
     }
 }
 
 body.dark-mode div.easyChatBotMenuBar {
-    background-color: #282828;
+    background-color: #000;
 }
 
 body.dark-mode div.easyChatBotMenuBar h1 {
@@ -445,11 +445,11 @@ body.dark-mode div.easyChatBotMenuBar h1 {
 }
 
 body.dark-mode div.easyChatBotRoot div.easyChatBotContent {
-    background-color: #282828;
+    background-color: #000;
 }
 
 body.dark-mode div.easyChatBotRoot div.chatBotArea div.chatBubblesContainer {
-    background-color: #282828;
+    background-color: #000;
 }
 
 body.dark-mode .chatMessage.assistant {
@@ -457,7 +457,7 @@ body.dark-mode .chatMessage.assistant {
 }
 
 body.dark-mode textarea.chatTextbox {
-    background-color: #282828;
+    background-color: #000;
     color: #fff;
 }
 
@@ -466,13 +466,13 @@ body.dark-mode textarea.chatTextbox::placeholder {
 }
 
 body.dark-mode div.loginBox {
-    background-color: #282828;
+    background-color: #000;
     color: #fff;
 }
 
 body.dark-mode div.loginBox input[type="text"],
 body.dark-mode div.loginBox input[type="password"] {
-    background-color: #282828;
+    background-color: #000;
     color: #fff;
 }
 
