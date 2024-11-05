@@ -14,7 +14,7 @@
                 <h1>Pflege- & Hygienerichtlinien KSGR</h1>
                 <ul>
                     <li style="float:right">
-                      <a id="modeToggle" href="#"></a>
+                      <a id="modeToggle" href="#">☾</a>
                     </li>
                     <li style="float:right">
                         {% if user and user.is_authenticated %}<a class="active logout-btn" href="{{ url_for('logout') }}">Abmelden</a>{% else %}<a class="active login-btn" href="{{ url_for('login') }}">Login</a>{% endif %}

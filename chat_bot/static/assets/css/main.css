@@ -56,7 +56,7 @@ div.loginBox input[type="password"] {
     border-radius: 20px;
     border: 2px solid #C60219;
     background-color: #fff;
-    color: #000;
+    color: #282828;
     font-size: 1.1em;
 }
 
@@ -96,7 +96,7 @@ div.easyChatBotMenuBar {
 }
 div.easyChatBotMenuBar h1 {
     text-align: left;
-    color: #000000;
+    color: #282828;
     font-family: 'Segoe UI Variable Static Small';
     font-weight: 700;
     font-size: 1.4em;
@@ -184,7 +184,7 @@ textarea.chatTextbox {
     border: 2px solid #C60219;
     resize: none;
     background-color: #fff;
-    color: #000;
+    color: #282828;
     font-size: 1.1em;
 }
 
@@ -245,7 +245,7 @@ textarea.chatTextbox:focus {
 
 .chatMessage.assistant {
     background-color: #D9D9D9;
-    color: #000;
+    color: #282828;
     margin-right: auto;
 }
 
@@ -259,7 +259,7 @@ textarea.chatTextbox:focus {
 }
 
 .chatMessage.assistant.waiting {
-    color: #000;
+    color: #282828;
 }
 
 .chatMessage.error {
@@ -345,7 +345,7 @@ modal-dialog div.modal-content div.modal-body div.loading {
 
 modal-dialog div.modal-content div.modal-body hr  {
     border: 0px none transparent;
-    border-top: 1px solid black;
+    border-top: 1px solid #282828;
 }
 
 .chatSubmit, .chatClear {
@@ -387,7 +387,7 @@ modal-dialog div.modal-content div.modal-body hr  {
 
 @media (prefers-color-scheme: dark) {
     div.easyChatBotMenuBar {
-        background-color: #000;
+        background-color: #282828;
     }
     
     div.easyChatBotMenuBar h1 {
@@ -395,11 +395,11 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     div.easyChatBotRoot div.easyChatBotContent {
-        background-color: #000;
+        background-color: #282828;
     }
     
     div.easyChatBotRoot div.chatBotArea div.chatBubblesContainer {
-        background-color: #000;
+        background-color: #282828;
     }
 
     .chatMessage.assistant {
@@ -407,7 +407,7 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     textarea.chatTextbox {
-        background-color: #000;
+        background-color: #282828;
         color: #fff;
     }
 
@@ -416,13 +416,13 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
     
     div.loginBox {
-        background-color: #000;
+        background-color: #282828;
         color: #fff;
     }
 
     div.loginBox input[type="text"],
     div.loginBox input[type="password"] {
-        background-color: #000;
+        background-color: #282828;
         color: #fff;
     }
 
@@ -432,12 +432,12 @@ modal-dialog div.modal-content div.modal-body hr  {
     }
 
     .chatMessage.assistant.waiting {
-        color: #000;
+        color: #282828;
     }
 }
 
 body.dark-mode div.easyChatBotMenuBar {
-    background-color: #000;
+    background-color: #282828;
 }
 
 body.dark-mode div.easyChatBotMenuBar h1 {
@@ -445,11 +445,11 @@ body.dark-mode div.easyChatBotMenuBar h1 {
 }
 
 body.dark-mode div.easyChatBotRoot div.easyChatBotContent {
-    background-color: #000;
+    background-color: #282828;
 }
 
 body.dark-mode div.easyChatBotRoot div.chatBotArea div.chatBubblesContainer {
-    background-color: #000;
+    background-color: #282828;
 }
 
 body.dark-mode .chatMessage.assistant {
@@ -457,7 +457,7 @@ body.dark-mode .chatMessage.assistant {
 }
 
 body.dark-mode textarea.chatTextbox {
-    background-color: #000;
+    background-color: #282828;
     color: #fff;
 }
 
@@ -466,13 +466,13 @@ body.dark-mode textarea.chatTextbox::placeholder {
 }
 
 body.dark-mode div.loginBox {
-    background-color: #000;
+    background-color: #282828;
     color: #fff;
 }
 
 body.dark-mode div.loginBox input[type="text"],
 body.dark-mode div.loginBox input[type="password"] {
-    background-color: #000;
+    background-color: #282828;
     color: #fff;
 }
 
@@ -482,7 +482,7 @@ body.dark-mode div.loginBox input[type="password"]::placeholder {
 }
 
 body.dark-mode .chatMessage.assistant.waiting {
-    color: #A6A6A6;
+    color: #fff;
 }
 
 #modeToggle {
