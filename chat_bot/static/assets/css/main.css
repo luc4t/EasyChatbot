@@ -269,6 +269,7 @@ textarea.chatTextbox:focus {
 }
 
 
+
 modal-dialog {
     z-index: 1000;
     position: fixed;
@@ -475,4 +476,7 @@ body.dark-mode .chatMessage.assistant.waiting {
     color: #808080;
     text-decoration: none;
     font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
