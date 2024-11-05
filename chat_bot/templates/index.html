@@ -4,35 +4,29 @@ Easy Chat Bot
 {% endblock %}
 {% block headloadscript %}
     <script src="{{ url_for('static', filename='assets/js/modal.js') }}"></script>
-    <!-- Import zero-md element definition and auto-register -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/zero-md@3?register"></script>
-    <!-- Import pdf.js -->
     <script type="module">
         import pdfjsDist from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.7.76/+esm';
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.7.76/build/pdf.worker.mjs';
     </script>
     <script type="module" src="{{ url_for('static', filename='assets/js/pdfrenderer.js') }}"></script>
-    <!--<script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.min.mjs"></script>
-    <script type="module">
-
-        var { pdfjsLib } = globalThis;
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf.worker.mjs';
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.7.76/pdf_viewer.min.css" />-->
 {% endblock %}
 {% block content %}
-<h1>Chat</h1>
-
-<div class="chatBotArea">
-    <div class="chatBubblesContainer" id="chatBubblesContainer"></div>
-    <div class="chatUiInputs">
-        <textarea class="chatTextbox" id="chatTextBox"></textarea>
-        <div class="chatSubmit button" id="chatSubmitBtn">Submit</div>
-        <div class="chatClear button danger" id="chatClearBtn">Clear</div>    
+<div class="chatbot-container">
+    <div class="chatbot-header">
+        <h2>Chat with AI Assistant</h2>
+    </div>
+    <div class="chatbot-body">
+        <div class="chat-messages" id="chatBubblesContainer"></div>
+        <div class="chat-input">
+            <textarea class="chat-textbox" id="chatTextBox" placeholder="Type your message..."></textarea>
+            <button class="chat-submit button" id="chatSubmitBtn">Send</button>
+        </div>
+    </div>
+    <div class="chatbot-footer">
+        <button class="chat-clear button danger" id="chatClearBtn">Clear Chat</button>
     </div>
 </div>
-
-
 {% endblock %}
 
 {% block bottomloadscript %}
